@@ -1,0 +1,120 @@
+import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class Main extends MouseAdapter {
+
+    static JFrame frame = new JFrame("Register");
+    static Map<String, String> users = new HashMap<>();
+    static JTextField uname = new JTextField();
+    static JTextField upass = new JTextField();
+
+
+    public static void main(String[] args) {
+
+
+
+        JPanel panel = new JPanel(null);
+        panel.setVisible(true);
+
+
+        frame.setVisible(true);
+        frame.setSize(500, 500);
+        frame.add(panel);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        JLabel name = new JLabel("UserName");
+        name.setVisible(true);
+        name.setSize(64, 64);
+        name.setLocation(10, 50);
+        panel.add(name);
+
+        JLabel pass = new JLabel("PassWord");
+        pass.setVisible(true);
+        pass.setSize(64, 64);
+        pass.setLocation(10, 75);
+        panel.add(pass);
+
+
+        uname.setVisible(true);
+        uname.setSize(120, 20);
+        uname.setLocation(90, 75);
+        panel.add(uname);
+
+
+        upass.setVisible(true);
+        upass.setSize(120, 20);
+        upass.setLocation(90, 100);
+        panel.add(upass);
+
+        JButton check = new JButton("Register");
+        check.setVisible(true);
+        check.setSize(125, 20);
+        check.setLocation(50, 125);
+        panel.add(check);
+
+
+
+        check.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    users.put(uname.getText(), String.valueOf(upass.getText()));
+                    Storage.registeruser(uname.getText(),upass.getText());
+                    JOptionPane.showMessageDialog(null,"You can now login!");
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        });
+        JButton login = new JButton("Login");
+        login.setVisible(true);
+        login.setSize(125, 20);
+        login.setLocation(150, 125);
+        panel.add(login);
+
+        login.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON1){
+                    if(Storage.checker(uname.getText(),upass.getText())){
+                        JOptionPane.showMessageDialog(null,"successfully logged in!");
+                        System.exit(WindowConstants.EXIT_ON_CLOSE);
+                    }else if(!(Storage.checker(uname.getText(),upass.getText()))){
+                        JOptionPane.showMessageDialog(null,"This user isn't registerd");
+                    }
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        });
+    }
+
+
+
+}
+
+
+
+
+
+
+
